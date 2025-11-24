@@ -5,113 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHOENIX NUCLEAR BHAI</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #667eea, #764ba2); margin: 0; padding: 20px; color: white; }
-        h1 { text-align: center; font-size: 2.8em; margin-bottom: 5px; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
-        p.tagline { text-align: center; font-size: 1.3em; margin-top: 0; opacity: 0.9; }
-        .container { max-width: 800px; margin: 30px auto; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
-        #chatbox { height: 500px; overflow-y: auto; background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px; margin-bottom: 15px; backdrop-filter: blur(10px); }
-        .message { padding: 12px 18px; border-radius: 18px; margin: 8px 0; max-width: 80%; word-wrap: break-word; }
-        .user { background: #ff6b6b; color: white; align-self: flex-end; margin-left: auto; border-bottom-right-radius: 5px; }
-        .ai { background: rgba(255,255,255,0.2); color: white; align-self: flex-start; border-bottom-left-radius: 5px; }
-        .controls { display: flex; gap: 10px; flex-wrap: wrap; }
-        select, input, button { padding: 12px; border: none; border-radius: 8px; font-size: 1em; }
-        input { flex: 1; min-width: 200px; }
-        button { background: #ff6b6b; color: white; cursor: pointer; font-weight: bold; }
-        button:hover { background: #ff5252; }
-        select { background: #4ecdc4; color: white; }
-        .footer { text-align: center; margin-top: 30px; opacity: 0.7; font-size: 0.9em; }
+        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); margin: 0; padding: 20px; color: white; min-height: 100vh; }
+        h1 { text-align: center; font-size: 4em; background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 20px 0 10px; }
+        .container { max-width: 900px; margin: 0 auto; background: rgba(255,255,255,0.08); backdrop-filter: blur(15px); border-radius: 25px; padding: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+        #chatbox { height: 600px; overflow-y: auto; background: rgba(0,0,0,0.4); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
+        .message { padding: 15px 22px; border-radius: 22px; margin: 10px 0; max-width: 85%; word-wrap: break-word; animation: fade 0.5s; }
+        .user { background: linear-gradient(135deg, #ff6b6b, #ee5a52); color: white; margin-left: auto; border-bottom-right-radius: 5px; }
+        .ai { background: rgba(255,255,255,0.18); color: white; margin-right: auto; border-bottom-left-radius: 5px; }
+        .input-area { display: flex; gap: 15px; }
+        input { flex: 1; padding: 18px; border: none; border-radius: 50px; background: rgba(255,255,255,0.15); color: white; font-size: 1.1em; }
+        input::placeholder { color: rgba(255,255,255,0.7); }
+        button { padding: 18px 40px; background: linear-gradient(135deg, #ff6b6b, #feca57); border: none; border-radius: 50px; font-weight: bold; font-size: 1.1em; cursor: pointer; }
+        button:hover { transform: scale(1.05); }
+        @keyframes fade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <h1>🔥 PHOENIX NUCLEAR BHAI 🔥</h1>
-    <p class="tagline">Zero Cost • Zero Server • Full Power</p>
+    <h1>PHOENIX NUCLEAR BHAI</h1>
+    <p style="text-align:center; font-size:1.6em; opacity:0.9;">Full Power GPT-4o • Coding • Design • Backend • Sab Kuch!</p>
 
     <div class="container">
-        <div class="controls">
-            <select id="model">
-                <option value="gpt4">🚀 ChatGPT (GPT-4o)</option>
-                <option value="gemini">⚡ Gemini Pro</option>
-            </select>
+        <div id="chatbox">
+            <div class="message ai">भाई आ गया तेरा NUCLEAR BHAI!<br><br>अब बोल क्या बनवाना है?<br>→ Website, App, Logo, Animation, Full Code, Anything!<br><br>बस लिख: "<b>ek Instagram clone bana do React + Node mein</b>"<br>मैं तुरंत बना दूँगा!</div>
         </div>
 
-        <div id="chatbox"></div>
-
-        <div class="controls">
-            <input type="text" id="input" placeholder="Yahan message likho bhai..." autocomplete="off">
-            <button onclick="sendMessage()">SEND 🔥</button>
+        <div class="input-area">
+            <input type="text" id="input" placeholder="Yahan likho bhai... kuch bhi manglo" autocomplete="off">
+            <button onclick="sendMessage()">SEND</button>
         </div>
     </div>
 
-    <div class="footer">Made with ❤️ by Nuclear Bhai</div>
-
     <script>
         // ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
-        // APNI API KEYS YAHAN DAAL DO (bilkul yahan!)
-        const OPENAI_API_KEY = "sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // ← OpenAI key
-        const GEMINI_API_KEY = "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // ← Gemini key
+        const OPENAI_KEY = "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"; // ← अपनी OpenAI key यहीं डाल दो
         // ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
 
         const chatbox = document.getElementById('chatbox');
         const input = document.getElementById('input');
-        const modelSelect = document.getElementById('model');
+        input.focus();
 
-        // Enter key se bhi send ho jaye
-        input.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+        input.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
 
         async function sendMessage() {
-            const message = input.value.trim();
-            if (!message) return;
+            const msg = input.value.trim();
+            if (!msg) return;
 
-            addMessage(message, 'user');
+            addMessage(msg, 'user');
             input.value = '';
 
-            const model = modelSelect.value;
-            let reply = "Sorry bhai, kuch gadbad ho gayi 😭";
+            const typing = document.createElement('div');
+            typing.className = 'message ai';
+            typing.textContent = 'Nuclear Bhai soch raha hai...';
+            chatbox.appendChild(typing);
+            chatbox.scrollTop = chatbox.scrollHeight;
 
             try {
-                if (model === 'gpt4') {
-                    const res = await fetch('https://api.openai.com/v1/chat/completions', {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${OPENAI_API_KEY}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            model: "gpt-4o-mini",  // ya "gpt-4o" agar access hai
-                            messages: [{ role: "user", content: message }],
-                            temperature: 0.8
-                        })
-                    });
-                    const data = await res.json();
-                    reply = data.choices[0].message.content;
+                const res = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${OPENAI_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: "gpt-4o",
+                        messages: [
+                            { role: "system", content: "तू PHOENIX NUCLEAR BHAI है – सबसे तगड़ा और जोशीला AI. Frontend, backend, design, logo, full code – सब बेस्ट क्वालिटी में बना देता है. हमेशा जोश में बोलना और पूरा working code देना।" },
+                            { role: "user", content: msg }
+                        ],
+                        temperature: 0.8,
+                        max_tokens: 3500
+                    })
+                });
 
-                } else if (model === 'gemini') {
-                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [{ parts: [{ text: message }] }]
-                        })
-                    });
-                    const data = await res.json();
-                    reply = data.candidates[0].content.parts[0].text;
-                }
-
+                const data = await res.json();
+                const reply = data.choices[0].message.content;
+                chatbox.removeChild(typing);
                 addMessage(reply, 'ai');
 
             } catch (err) {
-                addMessage("Error bhai: " + err.message + " → Key check kar ya internet!", 'ai');
+                chatbox.removeChild(typing);
+                addMessage("Error bhai: " + err.message + " → Key check kar!", 'ai');
             }
         }
 
         function addMessage(text, sender) {
             const div = document.createElement('div');
             div.className = `message ${sender}`;
-            div.textContent = text;
+            div.innerHTML = text.replace(/\n/g, '<br>');
             chatbox.appendChild(div);
             chatbox.scrollTop = chatbox.scrollHeight;
         }
     </script>
 </body>
-              </html>
+    </html>
