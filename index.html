@@ -14,9 +14,7 @@
         .ai { background: rgba(255,255,255,0.18); color: white; margin-right: auto; border-bottom-left-radius: 5px; }
         .input-area { display: flex; gap: 15px; }
         input { flex: 1; padding: 18px; border: none; border-radius: 50px; background: rgba(255,255,255,0.15); color: white; font-size: 1.1em; }
-        input::placeholder { color: rgba(255,255,255,0.7); }
         button { padding: 18px 40px; background: linear-gradient(135deg, #ff6b6b, #feca57); border: none; border-radius: 50px; font-weight: bold; font-size: 1.1em; cursor: pointer; }
-        button:hover { transform: scale(1.05); }
         @keyframes fade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; } }
     </style>
 </head>
@@ -27,7 +25,7 @@
 
     <div class="container">
         <div id="chatbox">
-            <div class="message ai">भाई आ गया तेरा NUCLEAR BHAI!<br><br>अब बोल क्या बनवाना है?<br>→ Website, App, Logo, Animation, Full Code, Anything!<br><br>बस लिख: "<b>ek Instagram clone bana do React + Node mein</b>"<br>मैं तुरंत बना दूँगा!</div>
+            <div class="message ai">भाई आ गया तेरा NUCLEAR BHAI!<br><br>अब बोल क्या बनवाना है?<br>→ Website, App, Logo, Full Code, Anything!<br><br>बस लिख: "<b>ek Instagram clone bana do</b>" – मैं तुरंत बना दूँगा!</div>
         </div>
 
         <div class="input-area">
@@ -38,7 +36,8 @@
 
     <script>
         // ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
-        const OPENAI_KEY = "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"; // ← अपनी OpenAI key यहीं डाल दो
+        // अपनी नई key यहाँ डालो (पुरानी key मर चुकी है!)
+        const OPENAI_KEY = "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";
         // ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
 
         const chatbox = document.getElementById('chatbox');
@@ -78,6 +77,7 @@
                     })
                 });
 
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const data = await res.json();
                 const reply = data.choices[0].message.content;
                 chatbox.removeChild(typing);
@@ -85,7 +85,7 @@
 
             } catch (err) {
                 chatbox.removeChild(typing);
-                addMessage("Error bhai: " + err.message + " → Key check kar!", 'ai');
+                addMessage("Error bhai: " + err.message + "<br>→ Nayi key daal aur commit kar!", 'ai');
             }
         }
 
