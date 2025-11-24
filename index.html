@@ -1,70 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
-<meta charset="utf-8">
-<title>PHOENIX NUCLEAR BHAI</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<style>
-  body{background:#000;color:#0f0;font-family:monospace;padding:20px;text-align:center}
-  h1{color:#f00;font-size:38px}
-  input,select,button,textarea{width:100%;max-width:500px;padding:15px;margin:15px auto;font-size:18px;background:#000;border:3px solid #0f0;color:#0f0;border-radius:8px}
-  button{background:#0f0;color:#000;font-weight:bold;cursor:pointer}
-  pre{background:#111;padding:20px;border:3px solid #0f0;margin:20px auto;max-width:90%;white-space:pre-wrap;word-break:break-all;text-align:left;overflow-x:auto}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHOENIX NUCLEAR BHAI</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #667eea, #764ba2); margin: 0; padding: 20px; color: white; }
+        h1 { text-align: center; font-size: 2.8em; margin-bottom: 5px; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        p.tagline { text-align: center; font-size: 1.3em; margin-top: 0; opacity: 0.9; }
+        .container { max-width: 800px; margin: 30px auto; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        #chatbox { height: 500px; overflow-y: auto; background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px; margin-bottom: 15px; backdrop-filter: blur(10px); }
+        .message { padding: 12px 18px; border-radius: 18px; margin: 8px 0; max-width: 80%; word-wrap: break-word; }
+        .user { background: #ff6b6b; color: white; align-self: flex-end; margin-left: auto; border-bottom-right-radius: 5px; }
+        .ai { background: rgba(255,255,255,0.2); color: white; align-self: flex-start; border-bottom-left-radius: 5px; }
+        .controls { display: flex; gap: 10px; flex-wrap: wrap; }
+        select, input, button { padding: 12px; border: none; border-radius: 8px; font-size: 1em; }
+        input { flex: 1; min-width: 200px; }
+        button { background: #ff6b6b; color: white; cursor: pointer; font-weight: bold; }
+        button:hover { background: #ff5252; }
+        select { background: #4ecdc4; color: white; }
+        .footer { text-align: center; margin-top: 30px; opacity: 0.7; font-size: 0.9em; }
+    </style>
 </head>
 <body>
-<h1>PHOENIX NUCLEAR BHAI</h1>
-<p style="color:#0ff;font-size:20px">Zero Cost • Zero Server • Full Power</p>
-<select id="p">
-  <option value="grok">Grok-3</option>
-  <option value="openai">GPT-4o</option>
-  <option value="gemini">Gemini-1.5-flash</option>
-</select>
-<input id="k" type="password" placeholder="Apna API Key daal">
-<textarea id="t" rows="5" placeholder="Bol bhai kya banau? Instagram, CapCut, APK..."></textarea>
-<button id="run">LAUNCH NUCLEAR</button>
-<pre id="o">Result yahan aayega...</pre>
 
-<script>
-document.getElementById("run").onclick = async () => {
-  const provider = document.getElementById("p").value;
-  const apiKey = document.getElementById("k").value.trim();
-  const prompt = document.getElementById("t").value.trim();
-  const output = document.getElementById("o");
-  if (!apiKey || !prompt) return alert("Key + prompt daal bhai");
-  output.textContent = "Launching Nuclear...";
+    <h1>🔥 PHOENIX NUCLEAR BHAI 🔥</h1>
+    <p class="tagline">Zero Cost • Zero Server • Full Power</p>
 
-  let url = "";
-  let body = {};
-  if (provider === "grok") {
-    url = "https://api.x.ai/v1/chat/completions";
-    body = {model:"grok-beta",messages:[{role:"user",content:prompt}]};
-  } else if (provider === "gemini") {
-    url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-    body = {contents:[{role:"user",parts:[{text:prompt}]}]};
-  } else {
-    url = "https://api.openai.com/v1/chat/completions";
-    body = {model:"gpt-4o-mini",messages:[{role:"user",content:prompt}]};
-  }
+    <div class="container">
+        <div class="controls">
+            <select id="model">
+                <option value="gpt4">🚀 ChatGPT (GPT-4o)</option>
+                <option value="gemini">⚡ Gemini Pro</option>
+            </select>
+        </div>
 
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: provider === "openai" || provider === "grok" 
-        ? {"Content-Type":"application/json", "Authorization":`Bearer ${apiKey}`}
-        : {"Content-Type":"application/json"},
-      body: JSON.stringify(body)
-    });
-    const data = await res.json();
-    let text = "";
-    if (data.choices) text = data.choices[0].message.content;
-    else if (data.candidates) text = data.candidates[0].content.parts[0].text;
-    else text = JSON.stringify(data, null, 2);
-    output.textContent = text || "No response";
-  } catch (e) {
-    output.textContent = "Error: " + e.message;
-  }
-};
-</script>
+        <div id="chatbox"></div>
+
+        <div class="controls">
+            <input type="text" id="input" placeholder="Yahan message likho bhai..." autocomplete="off">
+            <button onclick="sendMessage()">SEND 🔥</button>
+        </div>
+    </div>
+
+    <div class="footer">Made with ❤️ by Nuclear Bhai</div>
+
+    <script>
+        // ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
+        // APNI API KEYS YAHAN DAAL DO (bilkul yahan!)
+        const OPENAI_API_KEY = "sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // ← OpenAI key
+        const GEMINI_API_KEY = "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // ← Gemini key
+        // ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
+
+        const chatbox = document.getElementById('chatbox');
+        const input = document.getElementById('input');
+        const modelSelect = document.getElementById('model');
+
+        // Enter key se bhi send ho jaye
+        input.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+
+        async function sendMessage() {
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage(message, 'user');
+            input.value = '';
+
+            const model = modelSelect.value;
+            let reply = "Sorry bhai, kuch gadbad ho gayi 😭";
+
+            try {
+                if (model === 'gpt4') {
+                    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${OPENAI_API_KEY}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            model: "gpt-4o-mini",  // ya "gpt-4o" agar access hai
+                            messages: [{ role: "user", content: message }],
+                            temperature: 0.8
+                        })
+                    });
+                    const data = await res.json();
+                    reply = data.choices[0].message.content;
+
+                } else if (model === 'gemini') {
+                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: message }] }]
+                        })
+                    });
+                    const data = await res.json();
+                    reply = data.candidates[0].content.parts[0].text;
+                }
+
+                addMessage(reply, 'ai');
+
+            } catch (err) {
+                addMessage("Error bhai: " + err.message + " → Key check kar ya internet!", 'ai');
+            }
+        }
+
+        function addMessage(text, sender) {
+            const div = document.createElement('div');
+            div.className = `message ${sender}`;
+            div.textContent = text;
+            chatbox.appendChild(div);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+    </script>
 </body>
-  </html>
+              </html>
