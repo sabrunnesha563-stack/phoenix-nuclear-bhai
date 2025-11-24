@@ -5,48 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHOENIX NUCLEAR BHAI</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); margin: 0; padding: 20px; color: white; min-height: 100vh; }
-        h1 { text-align: center; font-size: 4em; background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 20px 0 10px; }
-        .container { max-width: 900px; margin: 0 auto; background: rgba(255,255,255,0.08); backdrop-filter: blur(15px); border-radius: 25px; padding: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); margin: 0; padding: 20px; color: white; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .login-box { background: rgba(0,0,0,0.7); padding: 50px; border-radius: 30px; text-align: center; backdrop-filter: blur(15px); box-shadow: 0 0 40px rgba(255,107,107,0.5); }
+        h1 { font-size: 4em; background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        input { display: block; width: 380px; margin: 20px auto; padding: 18px; font-size: 1.2em; border-radius: 50px; border: none; text-align: center; background: rgba(255,255,255,0.2); color: white; }
+        button { padding: 18px 70px; background: linear-gradient(135deg, #ff6b6b, #feca57); border: none; border-radius: 50px; font-size: 1.5em; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        .hidden { display: none; }
+        .main-app { max-width: 900px; margin: 20px auto; background: rgba(255,255,255,0.08); backdrop-filter: blur(15px); border-radius: 25px; padding: 30px; }
         #chatbox { height: 600px; overflow-y: auto; background: rgba(0,0,0,0.4); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
-        .message { padding: 15px 22px; border-radius: 22px; margin: 10px 0; max-width: 85%; word-wrap: break-word; animation: fade 0.5s; }
-        .user { background: linear-gradient(135deg, #ff6b6b, #ee5a52); color: white; margin-left: auto; border-bottom-right-radius: 5px; }
-        .ai { background: rgba(255,255,255,0.18); color: white; margin-right: auto; border-bottom-left-radius: 5px; }
+        .message { padding: 16px 24px; border-radius: 24px; margin: 12px 0; max-width: 85%; word-wrap: break-word; }
+        .user { background: #ff6b6b; color: white; margin-left: auto; }
+        .ai { background: rgba(255,255,255,0.18); margin-right: auto; }
         .input-area { display: flex; gap: 15px; }
-        input { flex: 1; padding: 18px; border: none; border-radius: 50px; background: rgba(255,255,255,0.15); color: white; font-size: 1.1em; }
-        button { padding: 18px 40px; background: linear-gradient(135deg, #ff6b6b, #feca57); border: none; border-radius: 50px; font-weight: bold; font-size: 1.1em; cursor: pointer; }
-        @keyframes fade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; } }
+        input#msg { flex: 1; padding: 20px; border-radius: 50px; background: rgba(255,255,255,0.15); color: white; font-size: 1.2em; border: none; }
     </style>
 </head>
 <body>
 
-    <h1>PHOENIX NUCLEAR BHAI</h1>
-    <p style="text-align:center; font-size:1.6em; opacity:0.9;">Full Power GPT-4o • Coding • Design • Backend • Sab Kuch!</p>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-box">
+        <h1>NUCLEAR BHAI</h1>
+        <p style="font-size:1.6em;">Apna Secret Password + OpenAI Key Daalo</p>
+        <input type="password" id="pass" placeholder="Password (admin only)">
+        <input type="password" id="apiKey" placeholder="sk-proj-... (OpenAI API Key)">
+        <br>
+        <button onclick="unlock()">UNLOCK NUCLEAR POWER</button>
+        <p style="margin-top:20px; font-size:0.9em;">Key yahan daal do → khud ka kharcha khud!<br>sabke liye FREE access</p>
+    </div>
 
-    <div class="container">
+    <!-- Main Chat -->
+    <div id="mainApp" class="main-app hidden">
+        <h1>PHOENIX NUCLEAR BHAI</h1>
+        <p style="text-align:center; font-size:1.7em;">GPT-4o Full Power • Tera Apna AI</p>
         <div id="chatbox">
-            <div class="message ai">भाई आ गया तेरा NUCLEAR BHAI!<br><br>अब बोल क्या बनवाना है?<br>→ Website, App, Logo, Full Code, Anything!<br><br>बस लिख: "<b>ek Instagram clone bana do</b>" – मैं तुरंत बना दूँगा!</div>
+            <div class="message ai">भाई तू आ गया!<br>अब जो मर्जी बोल – Instagram clone, Netflix UI, MERN app, logo, animation – सब तुरंत बना दूँगा!<br>बस बोल कया चाहिए</div>
         </div>
-
         <div class="input-area">
-            <input type="text" id="input" placeholder="Yahan likho bhai... kuch bhi manglo" autocomplete="off">
-            <button onclick="sendMessage()">SEND</button>
+            <input type="text" id="msg" placeholder="Yahan likho bhai..." autocomplete="off">
+            <button onclick="send()">SEND</button>
         </div>
     </div>
 
     <script>
-        // ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
-        // अपनी नई key यहाँ डालो (पुरानी key मर चुकी है!)
-        const OPENAI_KEY = "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";
-        // ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
+        // सिर्फ तू जानता है ये पासवर्ड
+        const ADMIN_PASSWORD = "bhaiop";   // ← अपना पासवर्ड डाल दे (जो तुझे पता हो)
 
-        const chatbox = document.getElementById('chatbox');
-        const input = document.getElementById('input');
-        input.focus();
+        let USER_API_KEY = "";
 
-        input.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+        function unlock() {
+            const enteredPass = document.getElementById('pass').value;
+            const enteredKey = document.getElementById('apiKey').value.trim();
 
-        async function sendMessage() {
+            if (enteredPass === ADMIN_PASSWORD && enteredKey.startsWith("sk-")) {
+                USER_API_KEY = enteredKey;
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainApp').classList.remove('hidden');
+                document.getElementById('msg').focus();
+            } else {
+                alert("Galat password ya key bhai! Dobara daal");
+            }
+        }
+
+        document.getElementById('msg')?.addEventListener('keypress', e => { if (e.key === 'Enter') send(); });
+
+        async function send() {
+            const input = document.getElementById('msg');
             const msg = input.value.trim();
             if (!msg) return;
 
@@ -55,37 +78,29 @@
 
             const typing = document.createElement('div');
             typing.className = 'message ai';
-            typing.textContent = 'Nuclear Bhai soch raha hai...';
-            chatbox.appendChild(typing);
-            chatbox.scrollTop = chatbox.scrollHeight;
+            typing.textContent = 'Nuclear Bhai full power on...';
+            document.getElementById('chatbox').appendChild(typing);
 
             try {
                 const res = await fetch('https://api.openai.com/v1/chat/completions', {
                     method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${OPENAI_KEY}`,
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Authorization': `Bearer ${USER_API_KEY}`, 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         model: "gpt-4o",
                         messages: [
-                            { role: "system", content: "तू PHOENIX NUCLEAR BHAI है – सबसे तगड़ा और जोशीला AI. Frontend, backend, design, logo, full code – सब बेस्ट क्वालिटी में बना देता है. हमेशा जोश में बोलना और पूरा working code देना।" },
+                            { role: "system", content: "तू PHOENIX NUCLEAR BHAI है – सबसे तगड़ा, जोशीला AI. पूरा working code, design, app, logo – सब बेस्ट क्वालिटी में दे।" },
                             { role: "user", content: msg }
                         ],
                         temperature: 0.8,
-                        max_tokens: 3500
+                        max_tokens: 4000
                     })
                 });
-
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const data = await res.json();
-                const reply = data.choices[0].message.content;
-                chatbox.removeChild(typing);
-                addMessage(reply, 'ai');
-
+                document.getElementById('chatbox').removeChild(typing);
+                addMessage(data.choices[0].message.content, 'ai');
             } catch (err) {
-                chatbox.removeChild(typing);
-                addMessage("Error bhai: " + err.message + "<br>→ Nayi key daal aur commit kar!", 'ai');
+                document.getElementById('chatbox').removeChild(typing);
+                addMessage("Error bhai: " + err.message + "<br>→ Key expire ho gayi ya galat hai!", 'ai');
             }
         }
 
@@ -93,9 +108,9 @@
             const div = document.createElement('div');
             div.className = `message ${sender}`;
             div.innerHTML = text.replace(/\n/g, '<br>');
-            chatbox.appendChild(div);
-            chatbox.scrollTop = chatbox.scrollHeight;
+            document.getElementById('chatbox').appendChild(div);
+            document.getElementById('chatbox').scrollTop = document.getElementById('chatbox').scrollHeight;
         }
     </script>
 </body>
-    </html>
+</html>
