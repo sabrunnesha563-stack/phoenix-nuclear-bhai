@@ -3,107 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHOENIX NUCLEAR BHAI v2</title>
+    <title>NUCLEAR BHAI v3</title>
     <style>
-        body{margin:0;padding:0;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:white;font-family:'Segoe UI',sans-serif;min-height:100vh}
-        .login{background:rgba(0,0,0,0.8);padding:60px;border-radius:30px;text-align:center;max-width:400px;margin:50px auto;backdrop-filter:blur(20px);box-shadow:0 0 50px rgba(255,107,107,0.6)}
-        h1{font-size:4.5em;background:linear-gradient(90deg,#ff6b6b,#feca57,#48dbfb);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        input{width:100%;padding:18px;margin:15px 0;border-radius:50px;border:none;background:rgba(255,255,255,0.15);color:white;font-size:1.2em;text-align:center}
-        button{width:100%;padding:20px;background:linear-gradient(135deg,#ff6b6b,#feca57);border:none;border-radius:50px;color:white;font-size:1.6em;cursor:pointer}
-        .hidden{display:none}
-        .main{max-width:1000px;margin:20px auto;background:rgba(255,255,255,0.08);border-radius:30px;padding:30px;backdrop-filter:blur(15px)}
-        #chat{height:65vh;overflow-y:auto;background:rgba(0,0,0,0.5);border-radius:25px;padding:20px;margin-bottom:20px}
-        .msg{padding:16px 25px;border-radius:25px;margin:12px 0;max-width:85%;word-wrap:break-word;display:inline-block}
-        .user{background:#ff6b6b;align-self:flex-end;margin-left:auto}
-        .ai{background:rgba(255,255,255,0.2);align-self:flex-start}
-        .input-area{display:flex;gap:15px}
-        #msg{flex:1;padding:20px;border-radius:50px;background:rgba(255,255,255,0.15);border:none;color:white;font-size:1.2em}
-        .send{padding:20px 40px;background:linear-gradient(135deg,#ff6b6b,#feca57);border:none;border-radius:50px;color:white;font-weight:bold;cursor:pointer}
-        .download-btn{background:#00d4ff;padding:12px 25px;border-radius:50px;margin-top:10px;display:inline-block;cursor:pointer}
+        body{margin:0;padding:0;background:#0f0c29;color:#fff;font-family:Arial,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center}
+        #lock{background:rgba(0,0,0,0.9);padding:50px;border-radius:30px;text-align:center;width:90%;max-width:420px;box-shadow:0 0 50px #ff004c}
+        h1{font-size:3.5em;background:linear-gradient(90deg,#ff6b6b,#feca57,#48dbfb);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        input{width:100%;padding:18px;margin:15px 0;border-radius:50px;background:rgba(255,255,255,0.2);border:none;color:#fff;font-size:1.2em;text-align:center}
+        button{padding:18px;background:linear-gradient(135deg,#ff6b6b,#ff9f43);border:none;border-radius:50px;color:#fff;font-size:1.5em;cursor:pointer;width:100%}
+        #app{display:none;max-width:950px;margin:20px auto;background:rgba(0,0,0,0.6);border-radius:30px;padding:30px;height:90vh}
+        #chat{height:70vh;overflow-y:auto;background:rgba(0,0,0,0.5);border-radius:20px;padding:20px;margin-bottom:20px}
+        .msg{padding:15px 20px;border-radius:20px;margin:10px 0;max-width:80%;word-wrap:break-word}
+        .user{background:#ff4757;float:right;clear:both}
+        .ai{background:#2f3542;float:left;clear:both;color:#fff}
+        #input-area{display:flex;gap:10px}
+        #msg{flex:1;padding:18px;border-radius:50px;background:rgba(255,255,255,0.2);border:none;color:#fff;font-size:1.2em}
+        #send{padding:18px 35px;background:#ff6b6b;border:none;border-radius:50px;color:#fff;font-weight:bold}
     </style>
 </head>
 <body>
 
-<div id="login" class="login">
-    <h1>NUCLEAR BHAI v2</h1>
-    <p style="font-size:1.5em">Password + OpenAI Key Daalo</p>
+<div id="lock">
+    <h1>NUCLEAR BHAI v3</h1>
+    <p style="font-size:1.4em">Password + OpenAI Key Daal</p>
     <input type="password" id="pass" placeholder="Password">
-    <input type="password" id="apikey" placeholder="sk-proj-...">
-    <button onclick="unlock()">UNLOCK & BUILD APPS</button>
+    <input type="password" id="key" placeholder="sk-proj-...">
+    <button onclick="unlock()">UNLOCK & GO NUCLEAR</button>
 </div>
 
-<div id="app" class="main hidden">
-    <h1 style="text-align:center;background:linear-gradient(90deg,#ff6b6b,#feca57,#48dbfb);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
-        PHOENIX NUCLEAR BHAI v2
-    </h1>
-    <p style="text-align:center;font-size:1.8em">GPT-4o • Ab Pura App Banega + Download Hoga!</p>
+<div id="app">
+    <h1 style="text-align:center">PHOENIX NUCLEAR BHAI v3</h1>
+    <p style="text-align:center;font-size:1.5em">GPT-4o • Direct ChatGPT • Jo Bolna Hai Bol Do</p>
     <div id="chat">
-        <div class="msg ai">भाई आ गया तेरा असली NUCLEAR BHAI v2!<br><br>
-        अब बोलो – “Instagram clone bana de”, “Netflix UI de”, “E-commerce app bana do” – मैं पूरा working project बनाके zip में दूँगा!</div>
+        <div class="msg ai">भाई आ गया तेरा NUCLEAR BHAI v3!<br><br>अब जो भी बोलेगा – सीधे असली GPT-4o को जाएगा और वो खुद reply करेगा। Instagram, Netflix, Game, App – सब बनाके देगा!</div>
     </div>
-    <div class="input-area">
-        <input type="text" id="msg" placeholder="Bolo bhai, kya banau?" autocomplete="off">
-        <button class="send" onclick="send()">SEND</button>
+    <div id="input-area">
+        <input type="text" id="msg" placeholder="Bolo bhai..." autocomplete="off">
+        <button id="send" onclick="send()">SEND</button>
     </div>
 </div>
 
 <script>
-    const ADMIN_PASS = "SSASpro";   // ← अपना पासवर्ड डाल दे
-    let API_KEY = "";
+    const PASS = "sabru420";   // ← अपना पासवर्ड यहाँ बदल ले
+    let KEY = "";
 
-    function unlock(){
-        if(document.getElementById('pass').value === ADMIN_PASS && document.getElementById('apikey').value.startsWith('sk-')){
-            API_KEY = document.getElementById('apikey').value.trim();
-            document.getElementById('login').classList.add('hidden');
-            document.getElementById('app').classList.remove('hidden');
-        }else alert("Galat password/key bhai!");
-    }
-
-    document.getElementById('msg').addEventListener('keypress', e=> {if(e.key==='Enter') send();});
-
-    async function send(){
-        let msg = document.getElementById('msg').value.trim();
-        if(!msg) return;
-        addMsg(msg,'user');
-        document.getElementById('msg').value='';
-
-        const typing = document.createElement('div');
-        typing.className='msg ai';
-        typing.textContent='Nuclear Bhai full power se app bana raha hai...';
-        document.getElementById('chat').appendChild(typing);
-
-        try{
-            const res = await fetch('https://api.openai.com/v1/chat/completions',{
-                method:'POST',
-                headers:{'Authorization':'Bearer '+API_KEY,'Content-Type':'application/json'},
-                body:JSON.stringify({
-                    model:"gpt-4o",
-                    messages:[
-                        {role:"system",content:"तू PHOENIX NUCLEAR BHAI v2 है। यूजर जो बोले, उसका पूरा working app/project बना के दे। हर फाइल अलग-अलग code block में दे। अंत में एक डाउनलोड बटन भी दे जिससे पूरा प्रोजेक्ट zip में डाउनलोड हो जाए।"},
-                        {role:"user",content:msg + " → पूरा working project bana ke de, हर file अलग code block में, aur ek download zip button bhi de"}
-                    ],
-                    temperature:0.8,
-                    max_tokens:4000
-                })
-            });
-            const data = await res.json();
-            document.getElementById('chat').removeChild(typing);
-            addMsg(data.choices[0].message.content,'ai');
-        }catch(err){
-            document.getElementById('chat').removeChild(typing);
-            addMsg("Error: "+err.message,'ai');
+    function unlock() {
+        if (document.getElementById("pass").value === PASS && document.getElementById("key").value.startsWith("sk-")) {
+            KEY = document.getElementById("key").value.trim();
+            document.getElementById("lock").style.display = "none";
+            document.getElementById("app").style.display = "block";
+            document.getElementById("msg").focus();
+        } else {
+            alert("Galat password ya key bhai!");
         }
     }
 
-    function addMsg(text,type){
-        const div = document.createElement('div');
-        div.className = `msg ${type}`;
-        div.innerHTML = text.replace(/\n/g,'<br>')
-                              .replace(/```([\w]*)\n/g,'<br><pre style="background:#333;padding:15px;border-radius:15px;overflow:auto"><code>$1<br>')
-                              .replace(/```/g,'</code></pre><br>');
-        document.getElementById('chat').appendChild(div);
-        document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+    document.getElementById("msg").addEventListener("keypress", e => { if (e.key === "Enter") send(); });
+
+    async function send() {
+        let msg = document.getElementById("msg").value.trim();
+        if (!msg) return;
+        addMsg(msg, "user");
+        document.getElementById("msg").value = "";
+
+        let typing = document.createElement("div");
+        typing.className = "msg ai";
+        typing.textContent = "GPT-4o soch raha hai...";
+        document.getElementById("chat").appendChild(typing);
+
+        try {
+            let res = await fetch("https://api.openai.com/v1/chat/completions", {
+                method: "POST",
+                headers: { "Authorization": "Bearer " + KEY, "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    model: "gpt-4o",
+                    messages: [{ role: "user", content: msg }],
+                    temperature: 0.8,
+                    max_tokens: 4000
+                })
+            });
+            let data = await res.json();
+            document.getElementById("chat").removeChild(typing);
+            addMsg(data.choices[0].message.content, "ai");
+        } catch (e) {
+            document.getElementById("chat").removeChild(typing);
+            addMsg("Error: " + e.message + "<br>Key check kar bhai!", "ai");
+        }
+    }
+
+    function addMsg(text, type) {
+        let div = document.createElement("div");
+        div.className = "msg " + type;
+        div.innerHTML = text.replace(/\n/g, "<br>");
+        document.getElementById("chat").appendChild(div);
+        document.getElementById("chat").scrollTop = document.getElementById("chat").scrollHeight;
     }
 </script>
 </body>
-        </html>
+</html>
