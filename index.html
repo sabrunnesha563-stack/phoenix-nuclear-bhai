@@ -6,11 +6,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
   body{margin:0;background:#000;color:#fff;font-family:Arial;display:flex;align-items:center;justify-content:center;height:100vh}
-  #lock,#app{display:none;background:#111;padding:40px;border-radius:20px;text-align:center;width:90%;max-width:420px;box-shadow:0 0 50px #00f} /* Changed shadow to blue/purple for Gemini theme */
+  #lock,#app{display:none;background:#111;padding:40px;border-radius:20px;text-align:center;width:90%;max-width:420px;box-shadow:0 0 50px #00f} 
   #app{display:none;width:95%;max-width:950px;height:92vh}
-  h1{font-size:3em;background:linear-gradient(90deg,#00bfff,#9370db,#00fa9a);-webkit-background-clip:text;-webkit-text-fill-color:transparent} /* Changed gradient color */
+  h1{font-size:3em;background:linear-gradient(90deg,#00bfff,#9370db,#00fa9a);-webkit-background-clip:text;-webkit-text-fill-color:transparent} 
   input{width:100%;padding:16px;margin:12px 0;border-radius:50px;background:#333;border:none;color:#fff;text-align:center;font-size:1.1em}
-  button{width:100%;padding:16px;background:#00bfff;border:none;border-radius:50px;color:#fff;font-size:1.3em;cursor:pointer} /* Changed button color */
+  button{width:100%;padding:16px;background:#00bfff;border:none;border-radius:50px;color:#fff;font-size:1.3em;cursor:pointer} 
   
   #chat{
     height:75vh;
@@ -21,7 +21,7 @@
     overflow-anchor: auto; 
   }
   .msg{max-width:80%;padding:14px 20px;border-radius:20px;margin:10px 0;clear:both}
-  .user{background:#00bfff;float:right} /* Changed user color */
+  .user{background:#00bfff;float:right} 
   .ai{background:#333;float:left}
   
   .ai.loading::after {
@@ -36,7 +36,7 @@
 
   #input-area{display:flex;gap:10px;margin-top:10px}
   #msg{flex:1;padding:16px;border-radius:50px;background:#333;border:none;color:#fff;font-size:1.1em}
-  #send{padding:16px 35px;background:#00bfff;border:none;border-radius:50px;color:#fff;font-weight:bold} /* Changed send button color */
+  #send{padding:16px 35px;background:#00bfff;border:none;border-radius:50px;color:#fff;font-weight:bold}
 </style>
 </head>
 <body>
@@ -61,11 +61,10 @@
 
 <script>
 let KEY = "";
-const GEMINI_MODEL = "gemini-2.5-flash"; // Using a fast, modern Gemini model
+const GEMINI_MODEL = "gemini-2.5-flash"; 
 
 function unlock(){
   let keyVal = document.getElementById("k").value.trim();
-  // Validation for Google API key structure (starts with AIzaSy)
   if(keyVal.startsWith("AIzaSy") && keyVal.length > 30){ 
     KEY = keyVal;
     document.getElementById("lock").style.display="none";
@@ -91,11 +90,11 @@ async function send(){
 
     let r = await fetch(API_URL,{
       method:"POST",
-      headers:{"Content-Type":"application/json"}, // No Auth header, key is in URL
+      headers:{"Content-Type":"application/json"},
       body:JSON.stringify({
-        // Gemini API request format
         contents: [{ role: "user", parts: [{ text: m }] }], 
-        config: {
+        // 💥 FIX: 'config' को 'generationConfig' से बदल दिया गया है
+        generationConfig: {
             temperature: 0.8,
         }
       })
@@ -104,13 +103,13 @@ async function send(){
     let d = await r.json();
     document.getElementById("chat").removeChild(t);
     
-    // Check for standard errors or blocked content (Gemini structure)
     if(d.error){
         add("Error from Gemini: "+d.error.message,"ai");
     } else if (d.candidates && d.candidates[0].content && d.candidates[0].content.parts && d.candidates[0].content.parts[0].text) {
         add(d.candidates[0].content.parts[0].text,"ai");
     } else {
-        add("Error: Gemini returned an unexpected response structure.","ai");
+        // यदि API ने कोई सामग्री नहीं दी (जैसे सुरक्षा कारणों से)
+        add("Error: Gemini returned an unexpected response or blocked content.","ai");
     }
   }catch(e){
     document.getElementById("chat").removeChild(t);
@@ -127,5 +126,4 @@ function add(txt,type){
 }
 </script>
 </body>
-  </html>
-  
+</html>
