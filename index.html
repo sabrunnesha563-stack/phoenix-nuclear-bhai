@@ -2,15 +2,15 @@
 <html lang="hi">
 <head>
 <meta charset="utf-8">
-<title>NUCLEAR BHAI v3</title>
+<title>GEMINI BHAI v3</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
   body{margin:0;background:#000;color:#fff;font-family:Arial;display:flex;align-items:center;justify-content:center;height:100vh}
-  #lock,#app{display:none;background:#111;padding:40px;border-radius:20px;text-align:center;width:90%;max-width:420px;box-shadow:0 0 50px #f00}
+  #lock,#app{display:none;background:#111;padding:40px;border-radius:20px;text-align:center;width:90%;max-width:420px;box-shadow:0 0 50px #00f} /* Changed shadow to blue/purple for Gemini theme */
   #app{display:none;width:95%;max-width:950px;height:92vh}
-  h1{font-size:3em;background:linear-gradient(90deg,#ff6b6b,#feca57,#48dbfb);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  h1{font-size:3em;background:linear-gradient(90deg,#00bfff,#9370db,#00fa9a);-webkit-background-clip:text;-webkit-text-fill-color:transparent} /* Changed gradient color */
   input{width:100%;padding:16px;margin:12px 0;border-radius:50px;background:#333;border:none;color:#fff;text-align:center;font-size:1.1em}
-  button{width:100%;padding:16px;background:#ff4757;border:none;border-radius:50px;color:#fff;font-size:1.3em;cursor:pointer}
+  button{width:100%;padding:16px;background:#00bfff;border:none;border-radius:50px;color:#fff;font-size:1.3em;cursor:pointer} /* Changed button color */
   
   #chat{
     height:75vh;
@@ -18,14 +18,12 @@
     background:#000;
     padding:20px;
     border-radius:15px;
-    /* UX Improvement: Prevents scroll jumping */
     overflow-anchor: auto; 
   }
   .msg{max-width:80%;padding:14px 20px;border-radius:20px;margin:10px 0;clear:both}
-  .user{background:#ff4757;float:right}
+  .user{background:#00bfff;float:right} /* Changed user color */
   .ai{background:#333;float:left}
   
-  /* UX Improvement: Style for loading dots */
   .ai.loading::after {
     content: '...';
     animation: pulse 1.5s infinite;
@@ -38,22 +36,22 @@
 
   #input-area{display:flex;gap:10px;margin-top:10px}
   #msg{flex:1;padding:16px;border-radius:50px;background:#333;border:none;color:#fff;font-size:1.1em}
-  #send{padding:16px 35px;background:#ff4757;border:none;border-radius:50px;color:#fff;font-weight:bold}
+  #send{padding:16px 35px;background:#00bfff;border:none;border-radius:50px;color:#fff;font-weight:bold} /* Changed send button color */
 </style>
 </head>
 <body>
 
 <div id="lock" style="display:block">
-  <h1>NUCLEAR BHAI v3</h1>
-  <p>OpenAI Key (sk-proj-...) is required</p>
-  <input type="password" id="k" placeholder="sk-proj-...">
+  <h1>GEMINI BHAI v3</h1>
+  <p>Google Gemini API Key (AIza...) is required</p>
+  <input type="password" id="k" placeholder="AIzaSy...">
   <button onclick="unlock()">UNLOCK</button>
 </div>
 
 <div id="app">
-  <h1>NUCLEAR BHAI v3</h1>
+  <h1>GEMINI BHAI v3</h1>
   <div id="chat">
-    <div class="msg ai">भाई आ गया! अब जो बोलेगा – सीधे GPT-4o को जाएगा।<br>Instagram, Netflix, Game, App – जो मर्ज़ी बोल!</div>
+    <div class="msg ai">भाई आ गया! अब जो बोलेगा – सीधे **Gemini 2.5 Flash** को जाएगा।<br>Instagram, Netflix, Game, App – जो मर्ज़ी बोल!</div>
   </div>
   <div id="input-area">
     <input type="text" id="msg" placeholder="Bolo bhai..." autocomplete="off">
@@ -62,18 +60,18 @@
 </div>
 
 <script>
-// Removed const PASS = "sabru420"; for security
 let KEY = "";
+const GEMINI_MODEL = "gemini-2.5-flash"; // Using a fast, modern Gemini model
 
 function unlock(){
   let keyVal = document.getElementById("k").value.trim();
-  // Improved validation: Check for sk-proj- and minimum realistic length
-  if(keyVal.startsWith("sk-proj-") && keyVal.length > 40){ 
+  // Validation for Google API key structure (starts with AIzaSy)
+  if(keyVal.startsWith("AIzaSy") && keyVal.length > 30){ 
     KEY = keyVal;
     document.getElementById("lock").style.display="none";
     document.getElementById("app").style.display="block";
     document.getElementById("msg").focus();
-  }else alert("Invalid OpenAI Key! Key must start with sk-proj- and be valid.");
+  }else alert("Invalid Gemini API Key! Key must start with AIzaSy...");
 }
 
 document.getElementById("msg").addEventListener("keypress",e=>{if(e.key==="Enter")send()});
@@ -83,26 +81,36 @@ async function send(){
   if(!m) return;
   add(m,"user"); document.getElementById("msg").value="";
   
-  // UX Improvement: Use 'loading' class for animation
   let t = document.createElement("div"); 
   t.className="msg ai loading"; 
-  t.textContent="GPT-4o bana raha hai"; 
+  t.textContent="Gemini bana raha hai"; 
   document.getElementById("chat").appendChild(t);
   
   try{
-    let r = await fetch("https://api.openai.com/v1/chat/completions",{
+    const API_URL = `https://generativelanguage.googleapis.com/v1/models/${GEMINI_MODEL}:generateContent?key=${KEY}`;
+
+    let r = await fetch(API_URL,{
       method:"POST",
-      headers:{"Authorization":"Bearer "+KEY,"Content-Type":"application/json"},
-      body:JSON.stringify({model:"gpt-4o",messages:[{role:"user",content:m}],temperature:0.8,max_tokens:4000})
+      headers:{"Content-Type":"application/json"}, // No Auth header, key is in URL
+      body:JSON.stringify({
+        // Gemini API request format
+        contents: [{ role: "user", parts: [{ text: m }] }], 
+        config: {
+            temperature: 0.8,
+        }
+      })
     });
+    
     let d = await r.json();
     document.getElementById("chat").removeChild(t);
     
-    // Added a check for API errors (d.error)
+    // Check for standard errors or blocked content (Gemini structure)
     if(d.error){
-        add("Error from OpenAI: "+d.error.message,"ai");
+        add("Error from Gemini: "+d.error.message,"ai");
+    } else if (d.candidates && d.candidates[0].content && d.candidates[0].content.parts && d.candidates[0].content.parts[0].text) {
+        add(d.candidates[0].content.parts[0].text,"ai");
     } else {
-        add(d.choices[0].message.content,"ai");
+        add("Error: Gemini returned an unexpected response structure.","ai");
     }
   }catch(e){
     document.getElementById("chat").removeChild(t);
@@ -119,4 +127,5 @@ function add(txt,type){
 }
 </script>
 </body>
-</html>
+  </html>
+  
